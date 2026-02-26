@@ -1,9 +1,8 @@
 package com.example.appkotlin.domain.model
 
-data class User(
+data class UserSummary(
     val id: Int,
     val firstName: String,
     val lastName: String,
-    val email: String,
     val image: String
 )

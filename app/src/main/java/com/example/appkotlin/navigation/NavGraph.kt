@@ -31,6 +31,11 @@ fun NavGraph(viewModelFactory: ViewModelFactory) {
                 viewModelFactory = viewModelFactory,
                 onUserClick = { userId ->
                     navController.navigate("user_detail/$userId")
+                },
+                onLogoutClick = {
+                    navController.navigate("login") {
+                        popUpTo("user_list") { inclusive = true }
+                    }
                 }
             )
         }
@@ -41,7 +46,8 @@ fun NavGraph(viewModelFactory: ViewModelFactory) {
             val userId = backStackEntry.arguments?.getInt("userId") ?: 0
             UserDetailScreen(
                 viewModelFactory = viewModelFactory,
-                userId = userId
+                userId = userId,
+                onBackClick = { navController.popBackStack() }
             )
         }
     }

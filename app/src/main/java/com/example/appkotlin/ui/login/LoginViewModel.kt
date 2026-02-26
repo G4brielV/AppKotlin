@@ -20,8 +20,10 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
     val uiState: StateFlow<LoginUiState> = _uiState
 
     fun login(username: String, password: String) {
+        // Inicia uma Coroutine
         viewModelScope.launch {
             _uiState.value = LoginUiState.Loading
+            // Delega ao repositório pelo login
             userRepository.login(username, password)
                 .onSuccess {
                     _uiState.value = LoginUiState.Success

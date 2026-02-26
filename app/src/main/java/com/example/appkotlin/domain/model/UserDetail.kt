@@ -1,8 +1,6 @@
-package com.example.appkotlin.data.remote
+package com.example.appkotlin.domain.model
 
-import com.example.appkotlin.domain.model.Hair
-
-data class UserDto(
+data class UserDetail(
     val id: Int,
     val firstName: String,
     val lastName: String,

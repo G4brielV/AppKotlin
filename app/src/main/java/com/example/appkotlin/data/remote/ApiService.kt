@@ -19,8 +19,8 @@ interface ApiService {
     suspend fun getUsers(
         @Query("limit") limit: Int,
         @Query("skip") skip: Int
-    ): UserListResponse
+    ): UserSummaryListResponse
 
     @GET("users/{id}")
-    suspend fun getUser(@Path("id") id: Int): UserDto
+    suspend fun getUser(@Path("id") id: Int): UserDetailDto
 }

@@ -2,7 +2,7 @@ package com.example.appkotlin.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appkotlin.domain.model.User
+import com.example.appkotlin.domain.model.UserDetail
 import com.example.appkotlin.domain.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 sealed class UserDetailUiState {
     object Loading : UserDetailUiState()
-    data class Success(val user: User) : UserDetailUiState()
+    data class Success(val user: UserDetail) : UserDetailUiState()
     data class Error(val message: String) : UserDetailUiState()
 }
 

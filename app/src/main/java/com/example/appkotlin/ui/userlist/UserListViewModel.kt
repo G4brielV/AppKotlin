@@ -2,7 +2,7 @@ package com.example.appkotlin.ui.userlist
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.appkotlin.domain.model.User
+import com.example.appkotlin.domain.model.UserSummary
 import com.example.appkotlin.domain.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 sealed class UserListUiState {
     object Loading : UserListUiState()
-    data class Success(val users: List<User>) : UserListUiState()
+    data class Success(val users: List<UserSummary>) : UserListUiState()
     data class Error(val message: String) : UserListUiState()
 }
 
@@ -20,7 +20,7 @@ class UserListViewModel(private val userRepository: UserRepository) : ViewModel(
     val uiState: StateFlow<UserListUiState> = _uiState
 
     private var currentPage = 1
-    private var userList = mutableListOf<User>()
+    private var userList = mutableListOf<UserSummary>()
 
     init {
         getUsers()
@@ -32,7 +32,7 @@ class UserListViewModel(private val userRepository: UserRepository) : ViewModel(
             userRepository.getUsers(currentPage, 20)
                 .onSuccess {
                     userList.addAll(it)
-                    _uiState.value = UserListUiState.Success(userList)
+                    _uiState.value = UserListUiState.Success(userList.toList())
                     currentPage++
                 }
                 .onFailure {

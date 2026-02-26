@@ -4,6 +4,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,41 +16,56 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.appkotlin.di.ViewModelFactory
-import com.example.appkotlin.domain.model.User
+import com.example.appkotlin.domain.model.UserSummary
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UserListScreen(
     viewModelFactory: ViewModelFactory,
-    onUserClick: (Int) -> Unit
+    onUserClick: (Int) -> Unit,
+    onLogoutClick: () -> Unit
 ) {
     val viewModel: UserListViewModel = viewModel(factory = viewModelFactory)
     val uiState by viewModel.uiState.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize()) {
-        when (val state = uiState) {
-            is UserListUiState.Loading -> {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
-            is UserListUiState.Error -> {
-                Text(
-                    text = state.message,
-                    color = MaterialTheme.colorScheme.error,
-                    modifier = Modifier.align(Alignment.Center)
-                )
-            }
-            is UserListUiState.Success -> {
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(state.users) { user ->
-                        UserItem(user = user, onClick = { onUserClick(user.id) })
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Users") },
+                actions = {
+                    IconButton(onClick = onLogoutClick) {
+                        Icon(Icons.Default.ExitToApp, contentDescription = "Logout")
                     }
-                    item {
-                        Button(
-                            onClick = { viewModel.getUsers() },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp)
-                        ) {
-                            Text("Load More")
+                }
+            )
+        }
+    ) { padding ->
+        Box(modifier = Modifier.fillMaxSize().padding(padding)) {
+            when (val state = uiState) {
+                is UserListUiState.Loading -> {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+                is UserListUiState.Error -> {
+                    Text(
+                        text = state.message,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
+                }
+                is UserListUiState.Success -> {
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        items(state.users) { user ->
+                            UserItem(user = user, onClick = { onUserClick(user.id) })
+                        }
+                        item {
+                            Button(
+                                onClick = { viewModel.getUsers() },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp)
+                            ) {
+                                Text("Load More")
+                            }
                         }
                     }
                 }
@@ -58,7 +75,7 @@ fun UserListScreen(
 }
 
 @Composable
-fun UserItem(user: User, onClick: () -> Unit) {
+fun UserItem(user: UserSummary, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,7 +95,6 @@ fun UserItem(user: User, onClick: () -> Unit) {
             Spacer(modifier = Modifier.width(16.dp))
             Column {
                 Text(text = "${user.firstName} ${user.lastName}", style = MaterialTheme.typography.bodyLarge)
-                Text(text = user.email, style = MaterialTheme.typography.bodyMedium)
             }
         }
     }

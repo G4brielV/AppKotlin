@@ -2,7 +2,7 @@ package com.example.appkotlin.data.remote
 
 import com.example.appkotlin.domain.model.Hair
 
-data class UserDto(
+data class UserDetailDto(
     val id: Int,
     val firstName: String,
     val lastName: String,
@@ -14,3 +14,5 @@ data class UserDto(
     val birthDate: String,
     val hair: Hair
 )
+
+
