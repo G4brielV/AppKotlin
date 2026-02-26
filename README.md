@@ -63,4 +63,9 @@ app/src/main/java/com/example/appkotlin/
 4. **Executar**
    - Selecione um emulador ou dispositivo físico com API 24+.
    - Clique no botão Run (Play).
+5. **Credenciais de Acesso:**
+   - Como o app consome a API DummyJSON, você deve utilizar um usuário válido cadastrado na plataforma.
+   - Sugestão de Login:
+      - ```Username:``` **emilys**
+      - ```Password:``` **emilyspass**
 
