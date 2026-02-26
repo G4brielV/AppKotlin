@@ -52,3 +52,15 @@ app/src/main/java/com/example/appkotlin/
     ├── userlist/           # Tela e ViewModel de Listagem
     └── detail/             # Tela e ViewModel de Detalhes
 ```
+## ❗ Como Executar o Projeto
+1. **Clone o repositório**
+   ```
+     https://github.com/G4brielV/AppKotlin.git
+   ```
+2. **Abra o Android Studio**
+   - Recomendado: Android Studio Ladybug ou superior.
+3. **Sincronize o Gradle**
+4. **Executar**
+   - Selecione um emulador ou dispositivo físico com API 24+.
+   - Clique no botão Run (Play).
+
